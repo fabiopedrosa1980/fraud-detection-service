@@ -14,7 +14,6 @@ import org.springframework.kafka.annotation.EnableKafkaStreams;
 @Slf4j
 public class FraudDetectionStream {
 
-
     @Bean
     public KStream<String, String> fraudDetectStream(StreamsBuilder builder) {
 
