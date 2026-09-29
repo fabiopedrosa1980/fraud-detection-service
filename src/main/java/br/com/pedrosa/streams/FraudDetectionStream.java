@@ -14,10 +14,6 @@ import org.springframework.kafka.annotation.EnableKafkaStreams;
 @Slf4j
 public class FraudDetectionStream {
 
-    //create bean
-    //-> read the topic
-    //-> process filter
-    //-> write to dest
 
     @Bean
     public KStream<String, String> fraudDetectStream(StreamsBuilder builder) {
@@ -27,7 +23,6 @@ public class FraudDetectionStream {
                 .stream("transactions");
 
         // Step 2: Process the stream to detect fraudulent transactions.
-
         KStream<String, String> fraudTransactionStream = transactionsStream
                 .filter((key, value) -> isSuspicious(value))
                 .peek((key, value) -> {
@@ -38,21 +33,7 @@ public class FraudDetectionStream {
         fraudTransactionStream.to("fraud-alerts");
 
         return transactionsStream;
-
     }
-
-
-//    public void fraudDetectStreamFunctionalStyle(StreamsBuilder builder) {
-//
-//         builder
-//                .stream("transactions")
-//                .filter((key, value) -> isSuspicious((String) value))
-//                .peek((key, value) -> log.warn("⚠️ FRAUD ALERT - transactionId={}, value={}", key, value))
-//                .to("fraud-alerts");
-//
-//
-//    }
-
 
     private boolean isSuspicious(String value) {
         try {
